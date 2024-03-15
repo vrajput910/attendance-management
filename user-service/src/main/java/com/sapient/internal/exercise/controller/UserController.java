@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDto registerUserDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            return ResponseEntity.badRequest().body(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+            return ResponseEntity.unprocessableEntity().body(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
 
         try {
             return ResponseEntity.ok(userService.createUser(registerUserDto));

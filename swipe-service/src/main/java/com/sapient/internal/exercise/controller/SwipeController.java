@@ -24,7 +24,7 @@ public class SwipeController {
     @PreAuthorize("hasAuthority('SWIPE_CARD')")
     public ResponseEntity<?> swipe(@Valid @RequestBody SwipeDto swipeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getFieldError());
+            return ResponseEntity.unprocessableEntity().body(bindingResult.getFieldError());
         }
         try {
             return ResponseEntity.ok(swipeService.swipeCard(swipeDto));
@@ -37,7 +37,7 @@ public class SwipeController {
     @PreAuthorize("hasAuthority('UPDATE_SWIPE')")
     public ResponseEntity<?> updateSwipe(@Valid @RequestBody ManualSwipeDto manualSwipeDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getFieldError());
+            return ResponseEntity.unprocessableEntity().body(bindingResult.getFieldError());
         }
         try {
             return ResponseEntity.ok(swipeService.updateSwipeManually(manualSwipeDto));
