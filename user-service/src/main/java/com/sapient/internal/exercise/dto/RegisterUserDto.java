@@ -18,7 +18,6 @@ public class RegisterUserDto {
     @NotBlank(message = "The field firstName can't be null or empty!")
     private String firstName;
 
-    @NotBlank(message = "The field lastName can't be null or empty!")
     private String lastName;
 
     @NotBlank(message = "The field email can't be null or empty!")

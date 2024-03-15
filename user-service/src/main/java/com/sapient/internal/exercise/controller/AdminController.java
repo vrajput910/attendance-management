@@ -24,7 +24,7 @@ public class AdminController {
     }
 
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasAuthority('FIND_BY_ID')")
+    @PreAuthorize("hasAuthority('FIND_USER')")
     public ResponseEntity<?> findByUserId(@PathVariable long userId) {
         try {
             return ResponseEntity.ok(adminService.findById(userId));
