@@ -1,0 +1,23 @@
+type Query {
+    findAllAbsentOnADate(date: String): [Attendance]
+    findByUserIdAndDateBetween(userId: ID, startDate: String, endDate: String): [Attendance]
+    findByUserIdAndDateBetweenAndStatus(userId: ID, status: String, startDate: String, endDate: String): [Attendance]
+}
+
+type Attendance {
+    id: ID
+    user: UserDto
+    date: String
+    firstSwipeIn: String
+    lastSwipeOut: String
+    workingHours: Float
+    totalHours: Float
+    attendanceStatus: String
+    location: String
+}
+
+type UserDto {
+    id: ID
+    name: String
+    email: String
+}
