@@ -48,7 +48,8 @@ This is not a web or rest service. This is just to have the common code that wil
 ## Junit Test Cases:
 Junit testcases are written for swipe-service. Code coverage is 95% as of now that can be found here: swipe-service/target/coverage-reports/jacoco/index.html
 ## GraphQL:
-**GraphiQL Url:** http://localhost:8765/attendance-service/graphiql?path=/attendance-service/graphql
-**Postman:** http://localhost:8765/attendance-service/graphql?path=/graphql
+**GraphiQL Url:** http://localhost:8765/attendance-service/graphiql?path=/attendance-service/graphql <br>
+**GraphQL Postman Url:** http://localhost:8765/attendance-service/graphql?path=/graphql <br><br>
+**Note:** Authorization Bearer token is needed in header to access above endpoints.
 ## API:
 [Click Here](/postman-json) is the postman collection
