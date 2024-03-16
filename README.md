@@ -13,13 +13,13 @@
 
 ## Services:
 1. [Gateway-Service](#gateway-service)
-2. Registry-Service
-3. User-Service
-4. Swipe-Service
-5. Attendance-Service
-6. Notification-Service
-7. Security-Service
-8. Common-Service
+2. [Registry-Service](#registry-service)
+3. [User-Service](#user-service)
+4. [Swipe-Service](#swipe-service)
+5. [Attendance-Service](#attendance-service)
+6. [Notification-Service](#notification-service)
+7. [Security-Service](#security-service)
+8. [Common-Service](#common-service)
 
 ### [Gateway-Service](/gateway-service):
 This is API Gateway of application. This is responsible to redirect all the requests to respective services. In future we can implement the security here and can integrate the authentication and authorization as well.
