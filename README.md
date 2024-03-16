@@ -46,7 +46,7 @@ This is not a web or rest service. This is just to have the common code that wil
 - swipe-events-topic
 - notification-events-topic
 ## Junit Test Cases:
-Junit testcases are written for swipe-service. Code coverage is 95% as of now that can be found here: swipe-service/target/coverage-reports/jacoco/index.html
+Junit testcases are written for swipe-service. Code coverage is 95% as of now that can be found here: **swipe-service/target/coverage-reports/jacoco/index.html**
 ## GraphQL:
 **GraphiQL Url:** http://localhost:8765/attendance-service/graphiql?path=/attendance-service/graphql <br>
 **GraphQL Postman Url:** http://localhost:8765/attendance-service/graphql?path=/graphql <br><br>
