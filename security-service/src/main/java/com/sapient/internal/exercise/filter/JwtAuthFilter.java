@@ -1,7 +1,7 @@
 package com.sapient.internal.exercise.filter;
 
+import com.sapient.internal.exercise.service.CacheService;
 import com.sapient.internal.exercise.service.JwtService;
-import com.sapient.internal.exercise.service.LocalCacheService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,7 +28,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     public UserDetailsService userDetailsService;
 
     @Autowired
-    private LocalCacheService localCacheService;
+    private CacheService<String, String> localCacheService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -42,7 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                localCacheService.saveInCache(username, token);
+                localCacheService.saveInValueOperations(username, token);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 if (jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

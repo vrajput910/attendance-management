@@ -1,12 +1,15 @@
 package com.sapient.internal.exercise.service;
 
+import com.sapient.internal.exercise.component.AppContext;
 import com.sapient.internal.exercise.dto.ManualSwipeDto;
 import com.sapient.internal.exercise.dto.SwipeDto;
+import com.sapient.internal.exercise.dto.UserDto;
 import com.sapient.internal.exercise.entities.SwipeEvent;
 import com.sapient.internal.exercise.enums.SwipeType;
 import com.sapient.internal.exercise.kafka.KafkaPublisher;
 import com.sapient.internal.exercise.kafka.SwipeKafkaEvent;
 import com.sapient.internal.exercise.repository.SwipeRepo;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,16 +40,28 @@ public class SwipeServiceTests {
     @Mock
     private KafkaPublisher kafkaPublisher;
 
+    @Mock
+    private AppContext appContext;
+
     private SwipeEvent swipeEvent;
 
+    private static UserDto userDto;
+
+    @BeforeAll
+    public static void init() {
+        userDto = new UserDto();
+        userDto.setId(2);
+    }
+
     @BeforeEach
-    public void init() {
+    public void initTests() {
         swipeEvent = new SwipeEvent("abc", 1, "2024-03-05", "11:30:00", null, null, 0);
     }
 
     @Test
     public void testSwipeIn() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.IN, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
         SwipeEvent returnedSwipeEvent = swipeService.swipeCard(swipeDto);
         assertNotNull(returnedSwipeEvent);
@@ -55,6 +70,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeInException() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.IN, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         RuntimeException thrown = assertThrows(
                 RuntimeException.class,
@@ -67,6 +83,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOut() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
         doAnswer(i -> i).when(kafkaPublisher).publishSwipeEvent(any(SwipeKafkaEvent.class));
@@ -77,6 +94,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutException() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         swipeEvent.setSwipeOutTime("14:45:06");
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         RuntimeException thrown = assertThrows(
@@ -90,6 +108,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutNextDay() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(new ArrayList<>()).thenReturn(List.of(swipeEvent));
         when(swipeRepo.findByUserId(anyLong(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
@@ -101,6 +120,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutNextDayException1() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(new ArrayList<>());
         when(swipeRepo.findByUserId(anyLong(), any(Pageable.class))).thenReturn(new ArrayList<>());
         RuntimeException thrown = assertThrows(
@@ -114,6 +134,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutNextDayException2() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         swipeEvent.setSwipeOutTime("14:45:06");
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(new ArrayList<>());
         when(swipeRepo.findByUserId(anyLong(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
@@ -128,6 +149,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutNextDayException3() {
         SwipeDto swipeDto = new SwipeDto(1L, SwipeType.OUT, "");
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(new ArrayList<>());
         when(swipeRepo.findByUserId(anyLong(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
@@ -142,6 +164,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeInManually() {
         ManualSwipeDto manualSwipeDto = new ManualSwipeDto(1L, SwipeType.IN, LocalDate.parse("2024-03-05"), LocalTime.parse("11:30:00"), null);
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
         SwipeEvent returnedSwipeEvent = swipeService.updateSwipeManually(manualSwipeDto);
         assertNotNull(returnedSwipeEvent);
@@ -150,6 +173,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeInManuallyException() {
         ManualSwipeDto manualSwipeDto = new ManualSwipeDto(1L, SwipeType.IN, LocalDate.parse("2024-03-05"), LocalTime.parse("11:30:00"), null);
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         RuntimeException thrown = assertThrows(
                 RuntimeException.class,
@@ -162,6 +186,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutManually() {
         ManualSwipeDto manualSwipeDto = new ManualSwipeDto(1L, SwipeType.OUT, LocalDate.parse("2024-03-05"), LocalTime.parse("11:30:00"), null);
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         when(swipeRepo.save(any(SwipeEvent.class))).thenReturn(swipeEvent);
         doAnswer(i -> i).when(kafkaPublisher).publishSwipeEvent(any(SwipeKafkaEvent.class));
@@ -172,6 +197,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutManuallyException1() {
         ManualSwipeDto manualSwipeDto = new ManualSwipeDto(1L, SwipeType.OUT, LocalDate.parse("2024-03-05"), LocalTime.parse("11:30:00"), null);
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(new ArrayList<>());
         RuntimeException thrown = assertThrows(
                 RuntimeException.class,
@@ -184,6 +210,7 @@ public class SwipeServiceTests {
     @Test
     public void testSwipeOutManuallyException2() {
         ManualSwipeDto manualSwipeDto = new ManualSwipeDto(1L, SwipeType.OUT, LocalDate.parse("2024-03-05"), LocalTime.parse("11:30:00"), null);
+        when(appContext.getLoggedInUser()).thenReturn(userDto);
         swipeEvent.setSwipeOutTime("14:45:06");
         when(swipeRepo.findByUserIdAndSwipeDate(anyLong(), anyString(), any(Pageable.class))).thenReturn(List.of(swipeEvent));
         RuntimeException thrown = assertThrows(

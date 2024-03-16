@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SwipeDto {
 
-    @NotNull(message = "Please provide userId!")
     private Long userId;
 
     @NotNull(message = "Please provide swipeType!")

@@ -16,7 +16,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class ManualSwipeDto {
 
-    @NotNull(message = "Please provide userId!")
     private Long userId;
 
     @NotNull(message = "Please provide swipeType!")

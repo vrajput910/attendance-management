@@ -58,6 +58,7 @@ public class UserServiceBootstrap implements ApplicationListener<ContextRefreshe
         userPermissions.add(permissionService.savePermission(new Permission("get_me", "To fetch the details of self")));
         userPermissions.add(permissionService.savePermission(new Permission("update_profile", "To update the details of self")));
         userPermissions.add(permissionService.savePermission(new Permission("SWIPE_CARD", "To save the swipe card time")));
+        userPermissions.add(permissionService.savePermission(new Permission("FIND_SELF_ATTENDANCE", "To fetch the attendance record of self")));
         return userPermissions;
     }
 

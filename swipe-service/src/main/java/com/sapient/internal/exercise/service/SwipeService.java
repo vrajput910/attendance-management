@@ -1,7 +1,9 @@
 package com.sapient.internal.exercise.service;
 
+import com.sapient.internal.exercise.component.AppContext;
 import com.sapient.internal.exercise.dto.ManualSwipeDto;
 import com.sapient.internal.exercise.dto.SwipeDto;
+import com.sapient.internal.exercise.dto.UserDto;
 import com.sapient.internal.exercise.entities.SwipeEvent;
 import com.sapient.internal.exercise.enums.SwipeType;
 import com.sapient.internal.exercise.kafka.KafkaPublisher;
@@ -27,12 +29,19 @@ public class SwipeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwipeService.class);
 
     @Autowired
+    private AppContext appContext;
+
+    @Autowired
     private SwipeRepo swipeRepo;
 
     @Autowired
     private KafkaPublisher kafkaPublisherService;
 
     public SwipeEvent swipeCard(SwipeDto swipeDto) {
+        UserDto userDto = appContext.getLoggedInUser();
+        if (Optional.ofNullable(userDto).isEmpty())
+            throw new RuntimeException("Session expired! Please login again!");
+        swipeDto.setUserId(userDto.getId());
         if (SwipeType.IN.equals(swipeDto.getSwipeType())) {
             return handleSwipeIn(swipeDto);
         } else {
@@ -130,6 +139,10 @@ public class SwipeService {
     }
 
     public SwipeEvent updateSwipeManually(ManualSwipeDto swipeDto) {
+        UserDto userDto = appContext.getLoggedInUser();
+        if (Optional.ofNullable(userDto).isEmpty())
+            throw new RuntimeException("Session expired! Please login again!");
+        swipeDto.setUserId(userDto.getId());
         if (SwipeType.IN.equals(swipeDto.getSwipeType())) {
             return handleManualSwipeIn(swipeDto);
         } else {
