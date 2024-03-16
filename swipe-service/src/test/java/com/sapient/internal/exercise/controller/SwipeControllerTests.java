@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sapient.internal.exercise.dto.ManualSwipeDto;
 import com.sapient.internal.exercise.dto.SwipeDto;
 import com.sapient.internal.exercise.enums.SwipeType;
+import com.sapient.internal.exercise.service.CacheService;
 import com.sapient.internal.exercise.service.JwtService;
-import com.sapient.internal.exercise.service.LocalCacheService;
 import com.sapient.internal.exercise.service.SwipeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +39,7 @@ public class SwipeControllerTests {
     private JwtService jwtService;
 
     @MockBean
-    private LocalCacheService localCacheService;
+    private CacheService<String, String> localCacheService;
 
     @Test
     public void swipeOk() throws Exception {
@@ -51,7 +51,7 @@ public class SwipeControllerTests {
 
     @Test
     public void swipeBadRequest() throws Exception {
-        mockMvc.perform(post("/v1/swipe").content(asJsonString(new SwipeDto(null, SwipeType.IN, "")))
+        mockMvc.perform(post("/v1/swipe").content(asJsonString(new SwipeDto(null, null, "")))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

@@ -18,6 +18,8 @@ type Attendance {
 
 type UserDto {
     id: ID
-    name: String
+    firstName: String
+    lastName: String
+    mobile: ID
     email: String
 }
