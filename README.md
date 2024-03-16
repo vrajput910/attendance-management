@@ -12,7 +12,7 @@
 - GraphQL API for fetching the attendance records.
 
 ## Services:
-1. Gateway-Service
+1. [Gateway-Service](#gateway-service)
 2. Registry-Service
 3. User-Service
 4. Swipe-Service
@@ -21,21 +21,21 @@
 7. Security-Service
 8. Common-Service
 
-### Gateway-Service:
+### [Gateway-Service](/gateway-service):
 This is API Gateway of application. This is responsible to redirect all the requests to respective services. In future we can implement the security here and can integrate the authentication and authorization as well.
-### Registry-Service:
+### [Registry-Service](/registry-service):
 This is a eureka registry service. All the services will be registered here, and we can monitor them.
-### User-Service:
+### [User-Service](/user-service):
 This service is responsible for user management with authentication and authorization.
-### Swipe-Service:
+### [Swipe-Service](/swipe-service):
 This service is responsible to store the swipe in and swipe out events and will perform some calculation to find out the working hours of the employees. This service will also publish the attendance records to Kafka for attendance service.
-### Attendance-Service:
+### [Attendance-Service](/attendance-service):
 This service will listen the data from Kafka to store the working and total hours of the employee in a day and then will provide the attendance reports. GraphQL is integrated with this service to enhance the endpoints.
-### Notification-Service:
+### [Notification-Service](/notification-service):
 This service will listen the events from Kafka and is responsible to send the notification or mails to the employees.
-### Security-Service:
+### [Security-Service](/security-service):
 This is not a web service. This is having the common code related to spring security that will be used in multiple services. This service is getting used as a dependency in other services.
-### Common-Service:
+### [Common-Service](/common-service):
 This is not a web or rest service. This is just to have the common code that will be used in multiple services. This service is getting used as a dependency in other services.
 ## Databases:
 - User-Service is using relation database that is MySQL.
@@ -52,4 +52,4 @@ Junit testcases are written for swipe-service. Code coverage is 95% as of now th
 **GraphQL Postman Url:** http://localhost:8765/attendance-service/graphql?path=/graphql <br><br>
 **Note:** Authorization Bearer token is needed in header to access above endpoints.
 ## API:
-[Click Here](/postman-json) is the postman collection
+[Click Here](/postman-json) for the postman collection
