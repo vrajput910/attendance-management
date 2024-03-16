@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "1d234b26-f232-40dd-ac21-a7cee40ee979",
+		"name": "attendance-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1499481"
+	},
+	"item": [
+		{
+			"name": "Fetch Self Attendance Record",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/attendance-service/v1/attendance?startDate=2024-03-12&endDate=2024-04-12",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"attendance-service",
+						"v1",
+						"attendance"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-03-12"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch Self Attendance Record for a Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/attendance-service/v1/attendance/ABSENT?startDate=2024-03-12&endDate=2024-04-12",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"attendance-service",
+						"v1",
+						"attendance",
+						"ABSENT"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-03-12"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-12"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

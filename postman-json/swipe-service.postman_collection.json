@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "be019b04-9436-4398-9f5f-598756cd0bd7",
+		"name": "swipe-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1499481"
+	},
+	"item": [
+		{
+			"name": "Swipe IN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 2,\n    \"swipeType\": \"IN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/swipe-service/v1/swipe",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"swipe-service",
+						"v1",
+						"swipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Swipe OUT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{userToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 2,\n    \"swipeType\": \"OUT\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/swipe-service/v1/swipe",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"swipe-service",
+						"v1",
+						"swipe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Swipe IN Manual",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 2,\n    \"swipeType\": \"IN\",\n    \"date\": \"2024-03-14\",\n    \"swipeTime\": \"09:33:07\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/swipe-service/v1/swipe/manual",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"swipe-service",
+						"v1",
+						"swipe",
+						"manual"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Swipe OUT Manual",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{adminToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 2,\n    \"swipeType\": \"OUT\",\n    \"date\": \"2024-03-14\",\n    \"swipeTime\": \"18:47:31\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/swipe-service/v1/swipe/manual",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"swipe-service",
+						"v1",
+						"swipe",
+						"manual"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
