@@ -22,12 +22,57 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-      - name: Build & push Docker image
+      - name: Build & push Gateway-Service Docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service
           tags: latest
           registry: docker.io
           dockerfile: ./gateway-service/Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push Registry-Service Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/registry-service
+          tags: latest
+          registry: docker.io
+          dockerfile: ./registry-service/Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push User-Service Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/user-service
+          tags: latest
+          registry: docker.io
+          dockerfile: ./user-service/Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push Swipe-Service Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/swipe-service
+          tags: latest
+          registry: docker.io
+          dockerfile: ./swipe-service/Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push Attendance-Service Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/attendance-service
+          tags: latest
+          registry: docker.io
+          dockerfile: ./attendance-service/Dockerfile
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & push Notification-Service Docker image
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: ${{ secrets.DOCKERHUB_USERNAME }}/notification-service
+          tags: latest
+          registry: docker.io
+          dockerfile: ./notification-service/Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
