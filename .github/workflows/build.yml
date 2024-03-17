@@ -33,6 +33,7 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/gateway-service:latest
 
   push_image:
+    needs: build
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
