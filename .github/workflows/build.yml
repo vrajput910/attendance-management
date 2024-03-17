@@ -23,6 +23,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
   build_and_push_image:
+    needs: maven_build
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
